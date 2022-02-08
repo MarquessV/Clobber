@@ -1,0 +1,7 @@
+.vscode
+.DS_store
+Builds/MacOSX/build/
+xcuserdata/
+build
+.cache
+compile_commands.json
