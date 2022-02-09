@@ -14,7 +14,8 @@
 //==============================================================================
 /**
 */
-class ClobberAudioProcessorEditor : public juce::AudioProcessorEditor
+class ClobberAudioProcessorEditor : public juce::AudioProcessorEditor,
+                                    private juce::Slider::Listener
 {
 public:
     ClobberAudioProcessorEditor (ClobberAudioProcessor&);
@@ -25,9 +26,13 @@ public:
     void resized() override;
 
 private:
+    void sliderValueChanged (juce::Slider* slider) override;
+
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     ClobberAudioProcessor& audioProcessor;
+
+    juce::Slider inputGain;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ClobberAudioProcessorEditor)
 };

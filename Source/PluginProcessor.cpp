@@ -146,11 +146,12 @@ void ClobberAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
     // Alternatively, you can process the samples with the channels
     // interleaved by keeping the same state.
 
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
-    {
-        auto* channelData = buffer.getWritePointer (channel);
-        // ..do something to the data...
-    }
+    buffer.applyGain (inputGain);
+    // for (int channel = 0; channel < totalNumInputChannels; ++channel)
+    // {
+    //     // auto* channelData = buffer.getWritePointer (channel);
+    //     // ..do something to the data...
+    // }
 }
 
 //==============================================================================
