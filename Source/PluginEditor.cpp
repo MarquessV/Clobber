@@ -24,6 +24,13 @@ ClobberAudioProcessorEditor::ClobberAudioProcessorEditor (
     inputGain.setValue (1.0);
     inputGain.addListener (this);
     addAndMakeVisible (&inputGain);
+
+    outputGain.setSliderStyle (juce::Slider::LinearBarVertical);
+    outputGain.setRange (0.0, 2.0, 0.01);
+    outputGain.setTextBoxStyle (juce::Slider::NoTextBox, false, 90, 0);
+    outputGain.setValue (1.0);
+    outputGain.addListener (this);
+    addAndMakeVisible (&outputGain);
 }
 
 ClobberAudioProcessorEditor::~ClobberAudioProcessorEditor() {}
@@ -42,10 +49,13 @@ void ClobberAudioProcessorEditor::resized()
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
     inputGain.setBounds (20, 30, 20, getHeight() - 60);
+    outputGain.setBounds (getWidth() - 40, 30, 20, getHeight() - 60);
 }
 
 void ClobberAudioProcessorEditor::sliderValueChanged (juce::Slider* slider)
 {
     if (slider == &inputGain)
+        audioProcessor.inputGain = slider->getValue();
+    if (slider == &outputGain)
         audioProcessor.inputGain = slider->getValue();
 }
