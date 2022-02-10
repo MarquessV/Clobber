@@ -57,6 +57,9 @@ public:
     float inputGain = 1.0f;
     float outputGain = 1.0f;
 
+    //==============================================================================
+    float softClip (float sample);
+
 private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ClobberAudioProcessor)

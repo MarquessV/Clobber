@@ -147,12 +147,19 @@ void ClobberAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
     // interleaved by keeping the same state.
 
     buffer.applyGain (inputGain);
-    // for (int channel = 0; channel < totalNumInputChannels; ++channel)
-    // {
-    //     // auto* channelData = buffer.getWritePointer (channel);
-    //     // ..do something to the data...
-    // }
+    for (int channel = 0; channel < totalNumInputChannels; ++channel)
+    {
+        auto* channelData = buffer.getWritePointer (channel);
+        for (int i = 0; i < buffer.getNumSamples(); ++i)
+            channelData[i] = softClip (channelData[i]);
+    }
     buffer.applyGain (outputGain);
+}
+
+float ClobberAudioProcessor::softClip (float sample)
+{
+    float alpha = 25.0f;
+    return 2.0f / juce::MathConstants<float>::pi * atan (alpha * sample);
 }
 
 //==============================================================================
