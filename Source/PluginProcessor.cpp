@@ -158,7 +158,9 @@ void ClobberAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
 
 float ClobberAudioProcessor::softClip (float sample)
 {
-    float alpha = 25.0f;
+    juce::NormalisableRange<float> alphaRange { 1.50f, 15.0f };
+    const auto normalisedDrive = driveRange.convertTo0to1 (drive);
+    const auto alpha = alphaRange.convertFrom0to1 (normalisedDrive);
     return 2.0f / juce::MathConstants<float>::pi * atan (alpha * sample);
 }
 

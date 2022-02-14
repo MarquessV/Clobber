@@ -56,6 +56,8 @@ public:
     //==============================================================================
     float inputGain = 1.0f;
     float outputGain = 1.0f;
+    float drive = 0.0f;
+    juce::NormalisableRange<float> driveRange { 0.0f, 1.0f };
 
     //==============================================================================
     float softClip (float sample);

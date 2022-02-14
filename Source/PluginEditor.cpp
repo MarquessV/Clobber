@@ -31,6 +31,13 @@ ClobberAudioProcessorEditor::ClobberAudioProcessorEditor (
     outputGain.setValue (1.0);
     outputGain.addListener (this);
     addAndMakeVisible (&outputGain);
+
+    drive.setSliderStyle (juce::Slider::RotaryHorizontalVerticalDrag);
+    drive.setRange (0.0, 1.0, 0.001);
+    drive.setTextBoxStyle (juce::Slider::NoTextBox, false, 90, 0);
+    drive.setValue (0.0);
+    drive.addListener (this);
+    addAndMakeVisible (&drive);
 }
 
 ClobberAudioProcessorEditor::~ClobberAudioProcessorEditor() {}
@@ -50,6 +57,9 @@ void ClobberAudioProcessorEditor::resized()
     // subcomponents in your editor..
     inputGain.setBounds (20, 30, 20, getHeight() - 60);
     outputGain.setBounds (getWidth() - 40, 30, 20, getHeight() - 60);
+
+    const int knobSize = 75;
+    drive.setBounds (getWidth() / 2 - knobSize, getHeight() / 2, knobSize, knobSize);
 }
 
 void ClobberAudioProcessorEditor::sliderValueChanged (juce::Slider* slider)
@@ -58,4 +68,6 @@ void ClobberAudioProcessorEditor::sliderValueChanged (juce::Slider* slider)
         audioProcessor.inputGain = slider->getValue();
     if (slider == &outputGain)
         audioProcessor.inputGain = slider->getValue();
+    if (slider == &drive)
+        audioProcessor.drive = slider->getValue();
 }

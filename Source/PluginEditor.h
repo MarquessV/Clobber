@@ -34,6 +34,7 @@ private:
 
     juce::Slider inputGain;
     juce::Slider outputGain;
+    juce::Slider drive;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ClobberAudioProcessorEditor)
 };
