@@ -59,6 +59,8 @@ public:
     float drive = 0.0f;
     juce::NormalisableRange<float> driveRange { 0.0f, 1.0f };
 
+    juce::dsp::DryWetMixer<float> mix;
+
     //==============================================================================
     float softClip (float sample);
 

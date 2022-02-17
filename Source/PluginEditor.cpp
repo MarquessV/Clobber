@@ -38,6 +38,13 @@ ClobberAudioProcessorEditor::ClobberAudioProcessorEditor (
     drive.setValue (0.0);
     drive.addListener (this);
     addAndMakeVisible (&drive);
+
+    mix.setSliderStyle (juce::Slider::RotaryHorizontalVerticalDrag);
+    mix.setRange (0.0, 1.0, 0.001);
+    mix.setTextBoxStyle (juce::Slider::NoTextBox, false, 90, 0);
+    mix.setValue (0.5);
+    mix.addListener (this);
+    addAndMakeVisible (&mix);
 }
 
 ClobberAudioProcessorEditor::~ClobberAudioProcessorEditor() {}
@@ -60,6 +67,7 @@ void ClobberAudioProcessorEditor::resized()
 
     const int knobSize = 75;
     drive.setBounds (getWidth() / 2 - knobSize, getHeight() / 2, knobSize, knobSize);
+    mix.setBounds (getWidth() / 2, getHeight() / 2, knobSize, knobSize);
 }
 
 void ClobberAudioProcessorEditor::sliderValueChanged (juce::Slider* slider)
@@ -70,4 +78,6 @@ void ClobberAudioProcessorEditor::sliderValueChanged (juce::Slider* slider)
         audioProcessor.inputGain = slider->getValue();
     if (slider == &drive)
         audioProcessor.drive = slider->getValue();
+    if (slider == &mix)
+        audioProcessor.mix.setWetMixProportion (slider->getValue());
 }

@@ -90,8 +90,8 @@ void ClobberAudioProcessor::changeProgramName (int index, const juce::String& ne
 
 void ClobberAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
+    auto spec = juce::dsp::ProcessSpec { getSampleRate(), static_cast<juce::uint32> (getBlockSize()), static_cast<juce::uint32> (getTotalNumInputChannels()) };
+    mix.prepare (spec);
 }
 
 void ClobberAudioProcessor::releaseResources()
@@ -147,12 +147,16 @@ void ClobberAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
     // interleaved by keeping the same state.
 
     buffer.applyGain (inputGain);
+    mix.pushDrySamples (buffer);
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         auto* channelData = buffer.getWritePointer (channel);
         for (int i = 0; i < buffer.getNumSamples(); ++i)
+        {
             channelData[i] = softClip (channelData[i]);
+        }
     }
+    mix.mixWetSamples (buffer);
     buffer.applyGain (outputGain);
 }
 
